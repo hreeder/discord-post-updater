@@ -12,9 +12,9 @@ client = discord.Client()
 
 async def post_or_update():
     channel = client.get_channel(int(os.environ["DISCORD_CHANNEL"]))
-    print(channel.last_message_id)
-    if channel.last_message_id:
-        message = await channel.fetch_message(channel.last_message_id)
+    message_id = os.environ.get("DISCORD_MESSAGE_ID", channel.last_message_id)
+    if message_id:
+        message = await channel.fetch_message(message_id)
         await message.edit(content=content)
     else:
         await channel.send(content=content)
