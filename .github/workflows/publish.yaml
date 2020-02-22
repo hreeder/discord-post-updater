@@ -1,0 +1,22 @@
+---
+name: Publish
+on:
+  push:
+    branches:
+    - master
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build Image
+      run: docker build --tag image .
+    - name: Publish Image (Docker Hub)
+      run: |
+        DH_IMAGE_ID=hreeder/discord-post-updater
+
+        echo "${{ secrets.DOCKERHUB_ACCESS_TOKEN }}" | docker login -u hreeder --password-stdin
+
+        docker tag image $DH_IMAGE_ID:latest
+        docker push $DH_IMAGE_ID
