@@ -1,0 +1,23 @@
+---
+name: Discord Post Updater
+author: Harry Reeder <harry@reeder.dev>
+description: Update a post in Discord 
+inputs:
+  discord_token:
+    description: Discord Bot Token for Authentication
+    required: true
+  post_file:
+    description: Path to the file containing the post
+    required: true
+  discord_channel:
+    description: Discord Channel ID
+    required: true
+  discord_message:
+    description: Existing message ID to update (must be owned by the bot user)
+    required: false
+runs:
+  using: docker
+  image: hreeder/discord-post-updater
+branding:
+  icon: edit
+  color: purple
