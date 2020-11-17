@@ -17,7 +17,7 @@ inputs:
     required: false
 runs:
   using: docker
-  image: hreeder/discord-post-updater
+  image: docker://ghcr.io/hreeder/discord-post-updater
 branding:
   icon: edit
   color: purple

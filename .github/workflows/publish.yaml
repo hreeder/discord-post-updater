@@ -20,3 +20,10 @@ jobs:
 
         docker tag image $DH_IMAGE_ID:latest
         docker push $DH_IMAGE_ID
+    - name: Publish Image (GHCR)
+      run: |
+        GHCR_IMAGE_ID=ghcr.io/hreeder/discord-post-updater
+
+        echo "${{ secrets.GHCR_PAT }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin
+        docker tag image $GHCR_IMAGE_ID:latest
+        docker push $GHCR_IMAGE_ID
