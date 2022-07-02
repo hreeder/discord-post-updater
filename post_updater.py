@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import datetime
 import os
 
 from typing import Any
@@ -25,24 +26,43 @@ async def post_or_update():
     channel = client.get_channel(
         int(get_actions_environ("DISCORD_CHANNEL", required=True))
     )
+    if channel is None:
+        print("Channel could not be found! Aborting")
+        return
     message_id = get_actions_environ("DISCORD_MESSAGE", channel.last_message_id)
 
     post_file_path = get_actions_environ("POST_FILE", "/etc/discord-post-updater/post")
     with open(post_file_path) as post_file:
         post = post_file.read()
 
+    use_embed = bool(get_actions_environ("USE_EMBED", False))
+
+    args = {}
+    if use_embed:
+        args["embed"] = discord.Embed(
+            content="",
+            title=post.split("\n")[0].split("#")[1].strip(),
+            description="\n".join(post.split("\n")[1:]).strip(),
+            colour=get_actions_environ("EMBED_COLOUR", 0)
+        )
+        args["embed"].set_footer(
+            text=f"Last updated: {datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S %Z')}"
+        )
+    else:
+        args["content"] = post
+
     if message_id and message_id != "new":
         message = await channel.fetch_message(message_id)
-        await message.edit(content=post)
+        await message.edit(**args)
     else:
-        await channel.send(content=post)
+        await channel.send(**args)
 
 
 @client.event
 async def on_ready():
     print(f"Logged in as {client.user}")
     await post_or_update()
-    await client.logout()
+    await client.close()
 
 
 client.run(get_actions_environ("DISCORD_TOKEN", required=True))
