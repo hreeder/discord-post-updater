@@ -43,7 +43,7 @@ async def post_or_update():
             content="",
             title=post.split("\n")[0].split("#")[1].strip(),
             description="\n".join(post.split("\n")[1:]).strip(),
-            colour=get_actions_environ("EMBED_COLOUR", 0)
+            colour=get_actions_environ("EMBED_COLOR", 0)
         )
         args["embed"].set_footer(
             text=f"Last updated: {datetime.datetime.now().strftime('%a, %d %b %Y %H:%M:%S %Z')}"

@@ -15,6 +15,12 @@ inputs:
   discord_message:
     description: Existing message ID to update (must be owned by the bot user)
     required: false
+  use_embed:
+    description: Whether to use an embed (title extracted from top line heading in file) or a regular message. Defaults to regular.
+    required: false
+  embed_color:
+    description: Decimal color for the embed if using an embed. Defaults to 0.
+    required: false
 runs:
   using: docker
   image: Dockerfile
