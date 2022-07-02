@@ -46,7 +46,7 @@ async def post_or_update():
             description="\n".join(post.split("\n")[1:]).strip(),
             colour=int(get_actions_environ("EMBED_COLOR", '0'))
         )
-        current_uk_time = atetime.datetime.now(tz=pytz.timezone('Europe/London'))
+        current_uk_time = datetime.datetime.now(tz=pytz.timezone('Europe/London'))
         args["embed"].set_footer(
             text=f"Last updated: {current_uk_time.strftime('%a, %d %b %Y %H:%M:%S %Z')}"
         )
