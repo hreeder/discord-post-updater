@@ -40,8 +40,8 @@ async def post_or_update():
 
     args = {}
     if use_embed:
+        args["content"] = ""
         args["embed"] = discord.Embed(
-            content="",
             title=post.split("\n")[0].split("#")[1].strip(),
             description="\n".join(post.split("\n")[1:]).strip(),
             colour=int(get_actions_environ("EMBED_COLOR", '0'))
