@@ -7,8 +7,11 @@ inputs:
     description: Discord Bot Token for Authentication
     required: true
   post_file:
-    description: Path to the file containing the post
-    required: true
+    description: Path to the file containing the raw post
+    required: false
+  post_xml:
+    description: Path to the file containing the XML specification for the post
+    required: false
   discord_channel:
     description: Discord Channel ID
     required: true

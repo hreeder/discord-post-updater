@@ -1,0 +1,85 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           vc:minVersion="1.1">
+  <xs:element name="message">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element type="xs:string" name="content">
+          <xs:annotation>
+            <xs:documentation> The content tag is for the actual message contents </xs:documentation>
+          </xs:annotation>
+        </xs:element>
+        <xs:element name="embed">
+          <xs:annotation>
+            <xs:documentation> The embed tag is for any embeds. Usually, one embed per message is best visually. </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="title">
+                <xs:annotation>
+                  <xs:documentation> The embed title </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element type="xs:string" name="content">
+                <xs:annotation>
+                  <xs:documentation> The embed body </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="field">
+                <xs:annotation>
+                  <xs:documentation> Fields have titles and contents too but are less pronounced </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element type="xs:string" name="title"/>
+                    <xs:element type="xs:string" name="content"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:int" name="colour"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="button" maxOccurs="unbounded" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation>
+    Buttons can have as attributes:
+    - "style" (one of Discord button styles),
+    - "id" (arbitrary but required so bot can choose action based on it)
+    - "action" (the action performed, either toggle-role:&lt;ID> for roles, toggle-role:&lt;GROUP>&lt;ID> for exclusive roles, or toggle-channel-access:&lt;ID>)
+    - "url" (if it's an external link. "action" cannot co-exist with "url")
+    - "disabled" (set to true to disable the button)
+    - "row" (optionally, 0 to 4 row information)
+
+    Buttons can have as inner tags:
+    - "label" (for the actual text in the button)
+    - "emoji" (if any emoji should be in the button)
+  </xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element type="xs:string" name="label"/>
+              <xs:element type="xs:string" name="emoji">
+                <xs:annotation>
+                  <xs:documentation> The button emoji can be the unicode symbol for the emoji, or the &lt;:name:ID> format for custom emojis </xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="style" use="optional">
+              <xs:annotation>
+                <xs:documentation> One of primary, secondary, success, danger, or link. </xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute type="xs:string" name="id" use="optional"/>
+            <xs:attribute type="xs:string" name="action" use="optional"/>
+            <xs:attribute type="xs:string" name="url" use="optional"/>
+            <xs:attribute type="xs:boolean" name="disabled" use="optional"/>
+            <xs:attribute type="xs:int" name="row" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
