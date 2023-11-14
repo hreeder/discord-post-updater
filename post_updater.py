@@ -94,7 +94,7 @@ async def post_or_update():
                 field = discord.EmbedField(
                     name=getattr(field_tag.find("./title"), "text", ""),
                     value=getattr(field_tag.find("./content"), "text", ""),
-                    inline=False
+                    inline=bool(field_tag.attrib.get("inline", False))
                 )
                 embed.append_field(field)
 

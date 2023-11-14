@@ -36,6 +36,7 @@
                     <xs:element type="xs:string" name="title"/>
                     <xs:element type="xs:string" name="content"/>
                   </xs:sequence>
+                  <xs:attribute type="xs:boolean" name="inline" use="optional"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
